@@ -55,7 +55,7 @@ public class ListarClientesServlet extends HttpServlet {
                 pstm.execute();
             }
 
-            String SQL = "SELECT * FROM pessoa";
+            String SQL = "SELECT * FROM pessoa ORDER BY nome";
 
             Statement stm = conn.createStatement();
 
@@ -67,6 +67,7 @@ public class ListarClientesServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Lista de Pessoas</h1>");
+            out.println("<hr>");
             out.println("<table width='100%'>");
             out.println("<tr bgcolor='#32CD32'>");
             out.println("<td>ID</td>");
