@@ -28,7 +28,7 @@ import principal.seguranca.Autorizacao;
 public class ListarClientesServlet extends HttpServlet {
 
     LoginServlet lg = new LoginServlet();
-    public boolean status = lg.statusSessao;
+//    public boolean status = lg.statusSessao;
     
     FilterChain chain;
     
@@ -40,7 +40,7 @@ public class ListarClientesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("Status: " + lg.statusSessao);
+//        System.out.println("Status: " + lg.statusSessao);
 
         PrintWriter out = response.getWriter();
 
@@ -116,8 +116,8 @@ public class ListarClientesServlet extends HttpServlet {
                 out.println("<td><a href='http://localhost:8080/JavaRodrigoFernandes/ListarClientes?idPessoa=" + rs.getInt("idPessoa") + "'>[APAGAR]</a></td>");
                 out.println("</tr>");
             }
-            status = false;
-            System.out.println("Status: " + lg.statusSessao);
+//            status = false;
+//            System.out.println("Status: " + lg.statusSessao);
             out.println("</table>");
             out.println("<hr>");
             out.println("</body>");
@@ -138,10 +138,10 @@ public class ListarClientesServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        lg.statusSessao = false;
-        System.out.println("Status: " + lg.statusSessao);
+//        lg.statusSessao = false;
+//        System.out.println("Status: " + lg.statusSessao);
         
-        au.status = false;
+//        au.status = false;
         
         au.doFilter(request, response, chain);
         response.sendRedirect("http://localhost:8080/JavaRodrigoFernandes/LoginServlet");

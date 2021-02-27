@@ -84,7 +84,7 @@ public class LoginDAO {
     public boolean loga(Usuario usuario) throws ClassNotFoundException {
         ConexaoBD conexao = new ConexaoBD();
         Connection conn = conexao.conexao();
-        String SQL = "SELECT * FROM login WHERE usuario = ? AND senha = ?;";
+        String SQL = "SELECT * FROM pessoa WHERE usuario = ? AND senha = ?;";
         PreparedStatement loginSt = null;
         ResultSet rs = null;
 

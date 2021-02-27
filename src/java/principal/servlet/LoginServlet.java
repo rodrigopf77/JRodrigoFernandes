@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +18,8 @@ import javax.servlet.http.HttpSession;
 import principal.Criptografia;
 import principal.Pessoa;
 import principal.Criptografia;
+import principal.DAO.LoginDAO;
+import principal.Usuario;
 
 /**
  *
@@ -23,16 +27,16 @@ import principal.Criptografia;
  */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
-    
-    public boolean statusSessao = true;
-    
-    public HttpSession sessao;
+
+//    public boolean statusSessao = true;
+
+//    public HttpSession sessao;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        System.out.println("Status: " + statusSessao);
+
+//        System.out.println("Status: " + statusSessao);
 
         try {
 
@@ -86,10 +90,10 @@ public class LoginServlet extends HttpServlet {
 
         PrintWriter out = response.getWriter();
 
-        String nome = request.getParameter("txtNome");
-        String senha = Criptografia.criptografar(request.getParameter("txtSenha"));
+        String usuario = request.getParameter("txtNome");
+        String senha = request.getParameter("txtSenha");
 
-        if (nome.trim().length() < 4) {
+        if (usuario.trim().length() < 4) {
 
             out.println("Preencha o campo nome!");
 
@@ -97,59 +101,29 @@ public class LoginServlet extends HttpServlet {
             out.println("Informe sua senha");
         } else {
 
+            Usuario us = new Usuario();
+            LoginDAO dao = new LoginDAO();
+
+            us.setUsuario(usuario);
+            us.setSenha(senha);
+            
             try {
-                Class.forName("org.postgresql.Driver");
 
-                try {
-                    Connection conn = DriverManager.getConnection(
-                            "jdbc:postgresql://localhost:5432/cadastropessoa", "postgres", "root");
+                if (dao.loga(us)) {
 
-                    String SQL = "SELECT * FROM pessoa WHERE nome = ? and senha = ?";
+                    response.sendRedirect("http://localhost:8080/JavaRodrigoFernandes/ListarClientes");
+                } else {
 
-                    PreparedStatement pstm = conn.prepareStatement(SQL);
+                    System.out.println("usuario nao existe");
+                    response.sendRedirect("http://localhost:8080/JavaRodrigoFernandes/LoginServlet?msg=error");
 
-                    pstm.setString(1, nome);
-                    pstm.setString(2, senha);
-                    /*21232F297A57A5A743894A0E4A801FC3*/
-
-                    ResultSet rs = pstm.executeQuery();
-
-                    if (rs.next()) {
-                        System.out.println("Senha capturada: " + senha);
-                        System.out.println("Senha banco: " + rs.getString("senha"));
-                        if (nome.equals(rs.getString("nome"))) {
-                            if (senha.equals(rs.getString("senha"))) {
-                                statusSessao = true;
-                                System.out.println("Status: " + statusSessao);
-                                pstm.close();
-                                conn.close();
-                                sessao = request.getSession();
-                                sessao.setAttribute("login", nome);
-                                sessao.setAttribute("senha", senha);
-                                sessao.setAttribute("info", request.getRemoteAddr());
-                                response.sendRedirect("http://localhost:8080/JavaRodrigoFernandes/ListarClientes");
-                            } else {
-                                
-                                pstm.close();
-                                conn.close();
-                                System.out.println("usuario nao existe");
-                                response.sendRedirect("http://localhost:8080/JavaRodrigoFernandes/LoginServlet?msg=error");
-
-                            }
-
-                        }
-
-                    }
-
-                } catch (SQLException e) {
-                    System.out.println("Erro: " + e.getMessage());
-                    out.println("Problema no banco de dados: " + e.getMessage());
                 }
 
             } catch (ClassNotFoundException ex) {
-                out.println("Problema ao carregar o driver de conexão!");
+                Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
+
     }
 }

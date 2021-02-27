@@ -21,7 +21,7 @@ import principal.servlet.LoginServlet;
 public class Autorizacao implements Filter {
     
     LoginServlet lg = new LoginServlet();
-    public boolean status = lg.statusSessao;
+//    public boolean status = lg.statusSessao;
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
@@ -41,7 +41,7 @@ public class Autorizacao implements Filter {
 //        boolean usuarioNaoEstaLogado = (sessao.getAttribute("usuarioLogado") == null);
 //        boolean loggedIn = sessao != null && sessao.getAttribute("login") != null;
 
-        if (verificaSessao && status) {
+        if (verificaSessao /*&& status*/) {
             chain.doFilter(request, response);
 //            response.sendRedirect("/ListarClientes");
             
