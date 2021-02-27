@@ -15,6 +15,7 @@ public class Pessoa {
     
     private int idPessoa;
     private String nome;
+    private String usuario;
     private String senha;
     private String sexo;
     private String email;
@@ -100,6 +101,14 @@ public class Pessoa {
         this.nome = nome;
     }
 
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+    
     public String getSenha() {
         return senha;
     }

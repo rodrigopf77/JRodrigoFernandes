@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import principal.Criptografia;
+import principal.Pessoa;
+import principal.Criptografia;
 
 /**
  *
@@ -21,10 +23,16 @@ import principal.Criptografia;
  */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
+    
+    public boolean statusSessao = true;
+    
+    public HttpSession sessao;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        System.out.println("Status: " + statusSessao);
 
         try {
 
@@ -45,9 +53,7 @@ public class LoginServlet extends HttpServlet {
             out.println("<title>Login</title>");
             out.println("</head>");
             out.println("<body>");
-            
-            
-            
+
             out.println("<h1>Autenticação</h1>");
             out.println("<hr/>");
 
@@ -104,23 +110,39 @@ public class LoginServlet extends HttpServlet {
 
                     pstm.setString(1, nome);
                     pstm.setString(2, senha);
+                    /*21232F297A57A5A743894A0E4A801FC3*/
 
                     ResultSet rs = pstm.executeQuery();
 
                     if (rs.next()) {
-                        pstm.close();
-                        conn.close();
-                        HttpSession sessao = request.getSession();
-                        sessao.setAttribute("login", nome);
-                        sessao.setAttribute("info", request.getRemoteAddr());
-                        response.sendRedirect("http://localhost:8080/JavaRodrigoFernandes/ListarClientes");
-                    } else {
-                        pstm.close();
-                        conn.close();
-                        response.sendRedirect("http://localhost:8080/JavaRodrigoFernandes/LoginServlet?msg=error");
+                        System.out.println("Senha capturada: " + senha);
+                        System.out.println("Senha banco: " + rs.getString("senha"));
+                        if (nome.equals(rs.getString("nome"))) {
+                            if (senha.equals(rs.getString("senha"))) {
+                                statusSessao = true;
+                                System.out.println("Status: " + statusSessao);
+                                pstm.close();
+                                conn.close();
+                                sessao = request.getSession();
+                                sessao.setAttribute("login", nome);
+                                sessao.setAttribute("senha", senha);
+                                sessao.setAttribute("info", request.getRemoteAddr());
+                                response.sendRedirect("http://localhost:8080/JavaRodrigoFernandes/ListarClientes");
+                            } else {
+                                
+                                pstm.close();
+                                conn.close();
+                                System.out.println("usuario nao existe");
+                                response.sendRedirect("http://localhost:8080/JavaRodrigoFernandes/LoginServlet?msg=error");
+
+                            }
+
+                        }
+
                     }
 
                 } catch (SQLException e) {
+                    System.out.println("Erro: " + e.getMessage());
                     out.println("Problema no banco de dados: " + e.getMessage());
                 }
 

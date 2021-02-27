@@ -11,12 +11,14 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import principal.seguranca.Autorizacao;
 
 /**
  *
@@ -24,21 +26,31 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ListarClientesServlet", urlPatterns = {"/ListarClientes"})
 public class ListarClientesServlet extends HttpServlet {
+
+    LoginServlet lg = new LoginServlet();
+    public boolean status = lg.statusSessao;
+    
+    FilterChain chain;
+    
+    Autorizacao au = new Autorizacao();
+    
     
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("Status: " + lg.statusSessao);
 
         PrintWriter out = response.getWriter();
 
         HttpSession sessao = request.getSession();
 
+//        chain.doFilter(request, response);
         if (sessao.getAttribute("login") == null) {
             response.sendRedirect("http://localhost:8080/JavaRodrigoFernandes/LoginServlet");
         }
-        
+
         try {
             Class.forName("org.postgresql.Driver");
 
@@ -46,7 +58,6 @@ public class ListarClientesServlet extends HttpServlet {
 
             // Deleta o registro
             // Quando exisitir uma QUERY String ID
-
             if (request.getParameter("idPessoa") != null) {
                 int ID = Integer.parseInt(request.getParameter("idPessoa"));
                 String SQLDelete = "DELETE FROM pessoa WHERE idPessoa = ?";
@@ -60,7 +71,7 @@ public class ListarClientesServlet extends HttpServlet {
             Statement stm = conn.createStatement();
 
             ResultSet rs = stm.executeQuery(SQL);
-           
+
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Pessoas</title>");
@@ -68,6 +79,7 @@ public class ListarClientesServlet extends HttpServlet {
             out.println("<body>");
             out.println("<h1>Lista de Pessoas</h1>");
             out.println("<hr>");
+            out.println("<form method='POST'>");
             out.println("<table width='100%'>");
             out.println("<tr bgcolor='#32CD32'>");
             out.println("<td>ID</td>");
@@ -84,11 +96,11 @@ public class ListarClientesServlet extends HttpServlet {
             out.println("<td>Apagar</td>");
             out.println("</tr>");
             while (rs.next()) {
-                
+
                 String dNascimento = sdf.format(rs.getDate("dtNascimento"));
                 String dRegistro = sdf.format(rs.getDate("dataRegistro"));
                 String dAtualizacao = sdf.format(rs.getDate("dataAtualizacao"));
-                
+
                 out.println("<tr>");
                 out.println("<td>" + rs.getInt("idPessoa") + "</td>");
                 out.println("<td>" + rs.getString("nome") + "</td>");
@@ -104,13 +116,16 @@ public class ListarClientesServlet extends HttpServlet {
                 out.println("<td><a href='http://localhost:8080/JavaRodrigoFernandes/ListarClientes?idPessoa=" + rs.getInt("idPessoa") + "'>[APAGAR]</a></td>");
                 out.println("</tr>");
             }
+            status = false;
+            System.out.println("Status: " + lg.statusSessao);
             out.println("</table>");
             out.println("<hr>");
             out.println("</body>");
             out.println("</html>");
             out.println("<td><a style='color: red' href='http://localhost:8080/JavaRodrigoFernandes/CadastrarPessoa'>[CADASTRAR]</a></td>");
             out.println("   |   ");
-            out.println("<a style='color: red' href='http://localhost:8080/JavaRodrigoFernandes/LoginServlet?msg=logoffs'>[SAIR]</a>");
+
+            out.println("<input type='submit' value='sair'>");
         } catch (SQLException ex) {
             Logger.getLogger(ListarClientesServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -122,7 +137,14 @@ public class ListarClientesServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
+        lg.statusSessao = false;
+        System.out.println("Status: " + lg.statusSessao);
+        
+        au.status = false;
+        
+        au.doFilter(request, response, chain);
+        response.sendRedirect("http://localhost:8080/JavaRodrigoFernandes/LoginServlet");
     }
 
 }
