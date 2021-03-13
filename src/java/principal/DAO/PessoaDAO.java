@@ -25,31 +25,32 @@ public class PessoaDAO {
 
         LocalDate lDate = LocalDate.now();
 
-        String sql = "INSERT INTO pessoa(nome, senha, sexo, email, dtnascimento, naturalidade, nacionalidade, cpf, dataRegistro, dataAtualizacao)"
-                + " values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO pessoa(nome, usuario, senha, sexo, email, dtnascimento, naturalidade, nacionalidade, cpf, dataRegistro, dataAtualizacao)"
+                + " values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             
             System.out.println("Nome: " + p.getNome());
-            System.out.println("Nome: " + p.getSexo());
-            
-            System.out.println("Nome: " + p.getEmail());
-            System.out.println("Nome: " + p.getdNascimento());
-            System.out.println("Nome: " + p.getNaturalidade());
-            System.out.println("Nome: " + p.getNacionalidade());
-            System.out.println("Nome: " + p.getCpf());
+            System.out.println("Sexo: " + p.getSexo());
+            System.out.println("Usuário: " + p.getUsuario());
+            System.out.println("E-mail: " + p.getEmail());
+            System.out.println("Data Nascimento: " + p.getdNascimento());
+            System.out.println("Naturalidade: " + p.getNaturalidade());
+            System.out.println("Nacionalidade: " + p.getNacionalidade());
+            System.out.println("Cpf: " + p.getCpf());
             
             insereSt = conex.prepareStatement(sql);
             insereSt.setString(1, p.getNome());
-            insereSt.setString(2, p.getSenha());
-            insereSt.setString(3, p.getSexo());
-            insereSt.setString(4, p.getEmail());
-            insereSt.setDate(5, Date.valueOf(p.getdNascimento()));
-            insereSt.setString(6, p.getNaturalidade());
-            insereSt.setString(7, p.getNacionalidade());
-            insereSt.setString(8, p.getCpf());
-            insereSt.setDate(9, Date.valueOf(lDate));
+            insereSt.setString(2, p.getUsuario());
+            insereSt.setString(3, p.getSenha());
+            insereSt.setString(4, p.getSexo());
+            insereSt.setString(5, p.getEmail());
+            insereSt.setDate(6, Date.valueOf(p.getdNascimento()));
+            insereSt.setString(7, p.getNaturalidade());
+            insereSt.setString(8, p.getNacionalidade());
+            insereSt.setString(9, p.getCpf());
             insereSt.setDate(10, Date.valueOf(lDate));
+            insereSt.setDate(11, Date.valueOf(lDate));
 
             insereSt.executeUpdate();
             System.out.println("Pessoa inserida com sucesso!");

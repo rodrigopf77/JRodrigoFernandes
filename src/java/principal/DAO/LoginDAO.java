@@ -1,13 +1,10 @@
 package principal.DAO;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import principal.Pessoa;
 import principal.Usuario;
 
 /**
@@ -17,15 +14,15 @@ import principal.Usuario;
  */
 public class LoginDAO {
     
-    public void salvar(Usuario usuario) throws ClassNotFoundException {
+    public void salvar(Pessoa pessoa) throws ClassNotFoundException {
         ConexaoBD cx = new ConexaoBD();
         Connection conexao = cx.conexao();
         PreparedStatement insereSt = null;
         String sql = "insert into login(usuario, senha) values(?,MD5(?));";
         try {
             insereSt = conexao.prepareStatement(sql);
-            insereSt.setString(1, usuario.getUsuario());
-            insereSt.setString(2, usuario.getSenha());
+            insereSt.setString(1, pessoa.getUsuario());
+            insereSt.setString(2, pessoa.getSenha());
 
             insereSt.executeUpdate();
 

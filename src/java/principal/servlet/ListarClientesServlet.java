@@ -26,6 +26,7 @@ import javax.servlet.http.HttpSession;
 public class ListarClientesServlet extends HttpServlet {
     
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    HttpSession sessao = null;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -33,9 +34,9 @@ public class ListarClientesServlet extends HttpServlet {
 
         PrintWriter out = response.getWriter();
 
-        HttpSession sessao = request.getSession();
+        this.sessao = request.getSession();
 
-        if (sessao.getAttribute("login") == null) {
+        if (this.sessao.getAttribute("login") == null) {
             response.sendRedirect("http://localhost:8080/JavaRodrigoFernandes/LoginServlet");
         }
         
@@ -67,6 +68,7 @@ public class ListarClientesServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Lista de Pessoas</h1>");
+            out.println("<form method='POST'>");
             out.println("<table width='100%'>");
             out.println("<tr bgcolor='#32CD32'>");
             out.println("<td>ID</td>");
@@ -110,6 +112,7 @@ public class ListarClientesServlet extends HttpServlet {
             out.println("<td><a style='color: red' href='http://localhost:8080/JavaRodrigoFernandes/CadastrarPessoa'>[CADASTRAR]</a></td>");
             out.println("   |   ");
             out.println("<a style='color: red' href='http://localhost:8080/JavaRodrigoFernandes/LoginServlet?msg=logoffs'>[SAIR]</a>");
+            out.println("<input type='submit' value='  Sair  '>");
         } catch (SQLException ex) {
             Logger.getLogger(ListarClientesServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -121,6 +124,11 @@ public class ListarClientesServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        /*Ainda não está fazendo o logoff*/
+        response.sendRedirect("http://localhost:8080/JavaRodrigoFernandes/ListarClientes");
+        this.sessao = null;
+        
 
     }
 
