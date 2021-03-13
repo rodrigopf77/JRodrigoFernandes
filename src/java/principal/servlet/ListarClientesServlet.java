@@ -66,22 +66,21 @@ public class ListarClientesServlet extends HttpServlet {
             out.println("<title>Pessoas</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Lista de Pessoas</h1>");
-            out.println("<form method='POST'>");
+            out.println("<h1 text-align='center' >Lista de Pessoas</h1>");
             out.println("<table width='100%'>");
             out.println("<tr bgcolor='#32CD32'>");
-            out.println("<td>ID</td>");
-            out.println("<td>Nome</td>");
-            out.println("<td>Sexo</td>");
-            out.println("<td>E-mail</td>");
-            out.println("<td>Data de Nascimento</td>");
-            out.println("<td>Naturalidade</td>");
-            out.println("<td>Nacionalidade</td>");
-            out.println("<td>Data Registro</td>");
-            out.println("<td>Data Atualização</td>");
-            out.println("<td>CPF</td>");
-            out.println("<td>Editar</td>");
-            out.println("<td>Apagar</td>");
+            out.println("<td style= 'text-align: center' ><strong>ID</strong></td>");
+            out.println("<td style= 'text-align: center' ><strong>Nome</strong></td>");
+            out.println("<td style= 'text-align: center' ><strong>Sexo</strong></td>");
+            out.println("<td style= 'text-align: center' ><strong>E-mail</strong></td>");
+            out.println("<td style= 'text-align: center' ><strong>Data de Nascimento</strong></td>");
+            out.println("<td style= 'text-align: center' ><strong>Naturalidade</strong></td>");
+            out.println("<td style= 'text-align: center' ><strong>Nacionalidade</strong></td>");
+            out.println("<td style= 'text-align: center' ><strong>Data de Registro</strong></td>");
+            out.println("<td style= 'text-align: center' ><strong>Data de Atualização</strong></td>");
+            out.println("<td style= 'text-align: center' ><strong>CPF</strong></td>");
+            out.println("<td style= 'text-align: center' ><strong>Editar</strong></td>");
+            out.println("<td style= 'text-align: center' ><strong>Apagar</strong></td>");
             out.println("</tr>");
             while (rs.next()) {
 
@@ -94,11 +93,11 @@ public class ListarClientesServlet extends HttpServlet {
                 out.println("<td>" + rs.getString("nome") + "</td>");
                 out.println("<td>" + rs.getString("sexo") + "</td>");
                 out.println("<td>" + rs.getString("email") + "</td>");
-                out.println("<td>" + dNascimento + "</td>");
+                out.println("<td style= 'text-align: center' >" + dNascimento + "</td>");
                 out.println("<td>" + rs.getString("naturalidade") + "</td>");
                 out.println("<td>" + rs.getString("nacionalidade") + "</td>");
-                out.println("<td>" + dRegistro + "</td>");
-                out.println("<td>" + dAtualizacao + "</td>");
+                out.println("<td style= 'text-align: center' >" + dRegistro + "</td>");
+                out.println("<td style= 'text-align: center' >" + dAtualizacao + "</td>");
                 out.println("<td>" + rs.getString("cpf") + "</td>");
                 out.println("<td><a href='http://localhost:8080/JavaRodrigoFernandes/EditarClientes?idPessoa=" + rs.getInt("idPessoa") + "'>[EDITAR]</a></td>");
                 out.println("<td><a href='http://localhost:8080/JavaRodrigoFernandes/ListarClientes?idPessoa=" + rs.getInt("idPessoa") + "'>[APAGAR]</a></td>");
@@ -111,7 +110,6 @@ public class ListarClientesServlet extends HttpServlet {
             out.println("<td><a style='color: red' href='http://localhost:8080/JavaRodrigoFernandes/CadastrarPessoa'>[CADASTRAR]</a></td>");
             out.println("   |   ");
             out.println("<a style='color: red' href='http://localhost:8080/JavaRodrigoFernandes/LoginServlet?msg=logoff'>[SAIR]</a>");
-            out.println("<input type='submit' value='  Sair  '>");
         } catch (SQLException ex) {
             Logger.getLogger(ListarClientesServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -119,15 +117,4 @@ public class ListarClientesServlet extends HttpServlet {
         }
 
     }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        /*Ainda não está fazendo o logoff*/
-        response.sendRedirect("http://localhost:8080/JavaRodrigoFernandes/ListarClientes");
-        this.sessao = null;
-
-    }
-
 }
