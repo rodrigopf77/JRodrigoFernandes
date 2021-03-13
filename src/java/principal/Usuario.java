@@ -1,7 +1,7 @@
 package principal;
 
 public class Usuario {
-    
+
     private String usuario;
     private String senha;
 
@@ -12,7 +12,7 @@ public class Usuario {
 
     public Usuario() {
     }
-    
+
     public String getUsuario() {
         return usuario;
     }
@@ -28,7 +28,5 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    
-    
-    
+
 }

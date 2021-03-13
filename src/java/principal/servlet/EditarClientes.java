@@ -31,7 +31,7 @@ public class EditarClientes extends HttpServlet {
 
         PrintWriter out = response.getWriter();
         Pessoa p = null;
-        
+
         HttpSession sessao = request.getSession();
 
         if (sessao.getAttribute("login") == null) {
@@ -86,7 +86,7 @@ public class EditarClientes extends HttpServlet {
                 out.println("   |   ");
                 out.println("</body>");
                 out.println("</html>");
-                out.println("<a style='color: red' href='http://localhost:8080/JavaRodrigoFernandes/LoginServlet?msg=logoffs'>[SAIR]</a>");
+                out.println("<a style='color: red' href='http://localhost:8080/JavaRodrigoFernandes/LoginServlet?msg=logoff'>[SAIR]</a>");
 
             } else {
                 out.println("Este registro não existe!");

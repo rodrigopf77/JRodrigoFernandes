@@ -2,11 +2,6 @@ package principal.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -15,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import principal.Criptografia;
+import principal.seguranca.Criptografia;
 import principal.DAO.LoginDAO;
 import principal.Usuario;
 
@@ -55,7 +50,7 @@ public class LoginServlet extends HttpServlet {
 
             if (request.getParameter("msg") != null) {
                 if (request.getParameter("msg").equals("error")) {
-                    out.println("<span style='color: red'>Login e/ou senhas incorreto!</span>");
+                    out.println("<span style='color: red'>Login e/ou senha incorretos!</span>");
                 }
             }
 
@@ -101,7 +96,7 @@ public class LoginServlet extends HttpServlet {
                 if (dao.loga(usuario)) {
 
                     HttpSession sessao = request.getSession();
-                    sessao.setAttribute("login", usuario);
+                    sessao.setAttribute("login", usuario.getUsuario());
                     sessao.setAttribute("info", request.getRemoteAddr());
                     response.sendRedirect("http://localhost:8080/JavaRodrigoFernandes/ListarClientes");
 

@@ -22,7 +22,6 @@ public class ConexaoBD {
             System.out.println("Erro de SQL ERRO: " + ex.getMessage());
         }
         return conexao;
-        
 
     }
 

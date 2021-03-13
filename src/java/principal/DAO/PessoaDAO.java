@@ -29,7 +29,7 @@ public class PessoaDAO {
                 + " values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
-            
+
             System.out.println("Nome: " + p.getNome());
             System.out.println("Sexo: " + p.getSexo());
             System.out.println("Usuário: " + p.getUsuario());
@@ -38,7 +38,7 @@ public class PessoaDAO {
             System.out.println("Naturalidade: " + p.getNaturalidade());
             System.out.println("Nacionalidade: " + p.getNacionalidade());
             System.out.println("Cpf: " + p.getCpf());
-            
+
             insereSt = conex.prepareStatement(sql);
             insereSt.setString(1, p.getNome());
             insereSt.setString(2, p.getUsuario());
@@ -80,7 +80,7 @@ public class PessoaDAO {
         String sql = "update pessoa set nome = ?, sexo = ?, email = ?, dtNascimento = ?, naturalidade = ?,"
                 + "nacionalidade = ?, cpf = ?, dataAtualizacao = ?"
                 + "where idpessoa = ?";
-        
+
         System.out.println("Código: " + p.getIdPessoa());
         System.out.println("Nome: " + p.getNome());
         System.out.println("Nascimento: " + p.getdNascimento());
@@ -98,7 +98,7 @@ public class PessoaDAO {
             atualizaSt.setInt(9, p.getIdPessoa());
 
             atualizaSt.executeUpdate();
-            
+
         } catch (SQLException e) {
             System.out.println("Erro ao atualizar dados. Mensagem: " + e.getMessage());
         } finally {
@@ -132,7 +132,6 @@ public class PessoaDAO {
             while (resultado.next()) {
 
 //                pessoa = new Pessoa();
-
                 pessoa.setIdPessoa((resultado.getInt("idPessoa")));
                 pessoa.setSexo(resultado.getString("sexo"));
                 pessoa.setEmail(resultado.getString("email"));
@@ -185,28 +184,27 @@ public class PessoaDAO {
                 System.out.println("teste");
                 pessoa.setIdPessoa(resultado.getInt("idPessoa"));
                 System.out.println(pessoa.getIdPessoa());
-                
+
                 pessoa.setNome(resultado.getString("nome"));
                 System.out.println(pessoa.getNome());
-                
+
                 pessoa.setSexo(resultado.getString("sexo"));
                 System.out.println(pessoa.getSexo());
-                
+
                 pessoa.setEmail(resultado.getString("email"));
                 System.out.println(pessoa.getEmail());
-                
+
                 pessoa.setDtNascimento(resultado.getDate("dtNascimento"));
                 System.out.println(pessoa.getDtNascimento());
-                
+
                 pessoa.setNaturalidade(resultado.getString("naturalidade"));
                 System.out.println(pessoa.getNaturalidade());
-                
+
                 pessoa.setNacionalidade(resultado.getString("nacionalidade"));
                 System.out.println(pessoa.getNacionalidade());
-                
+
                 pessoa.setCpf(resultado.getString("cpf"));
                 System.out.println(pessoa.getCpf());
-                
 
             }
         } catch (SQLException e) {

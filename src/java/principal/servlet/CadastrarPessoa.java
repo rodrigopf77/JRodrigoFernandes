@@ -19,7 +19,7 @@ public class CadastrarPessoa extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession sessao = request.getSession();
 
         if (sessao.getAttribute("login") == null) {
@@ -52,7 +52,7 @@ public class CadastrarPessoa extends HttpServlet {
             out.println("   |   ");
             out.println("</body>");
             out.println("</html>");
-            out.println("<a style='color: red' href='http://localhost:8080/JavaRodrigoFernandes/LoginServlet?msg=logoffs'>[SAIR]</a>");
+            out.println("<a style='color: red' href='http://localhost:8080/JavaRodrigoFernandes/LoginServlet?msg=logoff'>[SAIR]</a>");
         } catch (IOException e) {
 
         }
@@ -76,16 +76,16 @@ public class CadastrarPessoa extends HttpServlet {
 
         if (nome.trim().length() < 4) {
             out.println("Preencha o campo nome!");
-            
+
         } else if (dataNascimento.trim().length() < 9) {
             out.println("Preencha a data no formato 00/00/0000!");
-            
+
         } else if (cpf.trim().length() < 11) {
             out.println("Preencha um CPF válido, com no mínimo 11 digítos (Apenas números)!");
-            
+
         } else if (email.trim().length() < 7) {
             System.out.println("Preencha um e-mail válido!");
-            
+
         } else {
             try {
 

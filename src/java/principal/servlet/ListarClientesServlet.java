@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ListarClientesServlet", urlPatterns = {"/ListarClientes"})
 public class ListarClientesServlet extends HttpServlet {
-    
+
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     HttpSession sessao = null;
 
@@ -39,7 +39,7 @@ public class ListarClientesServlet extends HttpServlet {
         if (this.sessao.getAttribute("login") == null) {
             response.sendRedirect("http://localhost:8080/JavaRodrigoFernandes/LoginServlet");
         }
-        
+
         try {
             Class.forName("org.postgresql.Driver");
 
@@ -47,7 +47,6 @@ public class ListarClientesServlet extends HttpServlet {
 
             // Deleta o registro
             // Quando exisitir uma QUERY String ID
-
             if (request.getParameter("idPessoa") != null) {
                 int ID = Integer.parseInt(request.getParameter("idPessoa"));
                 String SQLDelete = "DELETE FROM pessoa WHERE idPessoa = ?";
@@ -61,7 +60,7 @@ public class ListarClientesServlet extends HttpServlet {
             Statement stm = conn.createStatement();
 
             ResultSet rs = stm.executeQuery(SQL);
-           
+
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Pessoas</title>");
@@ -85,11 +84,11 @@ public class ListarClientesServlet extends HttpServlet {
             out.println("<td>Apagar</td>");
             out.println("</tr>");
             while (rs.next()) {
-                
+
                 String dNascimento = sdf.format(rs.getDate("dtNascimento"));
                 String dRegistro = sdf.format(rs.getDate("dataRegistro"));
                 String dAtualizacao = sdf.format(rs.getDate("dataAtualizacao"));
-                
+
                 out.println("<tr>");
                 out.println("<td>" + rs.getInt("idPessoa") + "</td>");
                 out.println("<td>" + rs.getString("nome") + "</td>");
@@ -111,7 +110,7 @@ public class ListarClientesServlet extends HttpServlet {
             out.println("</html>");
             out.println("<td><a style='color: red' href='http://localhost:8080/JavaRodrigoFernandes/CadastrarPessoa'>[CADASTRAR]</a></td>");
             out.println("   |   ");
-            out.println("<a style='color: red' href='http://localhost:8080/JavaRodrigoFernandes/LoginServlet?msg=logoffs'>[SAIR]</a>");
+            out.println("<a style='color: red' href='http://localhost:8080/JavaRodrigoFernandes/LoginServlet?msg=logoff'>[SAIR]</a>");
             out.println("<input type='submit' value='  Sair  '>");
         } catch (SQLException ex) {
             Logger.getLogger(ListarClientesServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -124,11 +123,10 @@ public class ListarClientesServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         /*Ainda não está fazendo o logoff*/
         response.sendRedirect("http://localhost:8080/JavaRodrigoFernandes/ListarClientes");
         this.sessao = null;
-        
 
     }
 

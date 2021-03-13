@@ -13,7 +13,7 @@ import principal.Usuario;
  * @author rodri
  */
 public class LoginDAO {
-    
+
     public void salvar(Pessoa pessoa) throws ClassNotFoundException {
         ConexaoBD cx = new ConexaoBD();
         Connection conexao = cx.conexao();
@@ -77,7 +77,7 @@ public class LoginDAO {
 
         }
     }
-    
+
     public boolean loga(Usuario usuario) throws ClassNotFoundException {
         ConexaoBD conexao = new ConexaoBD();
         Connection conn = conexao.conexao();
@@ -109,7 +109,8 @@ public class LoginDAO {
                 System.out.println("Erro ao encerrar a conexão: " + ex.getMessage());
             }
 
-        }return status;
+        }
+        return status;
     }
 
 }
