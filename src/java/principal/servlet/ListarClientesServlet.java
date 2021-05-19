@@ -71,6 +71,7 @@ public class ListarClientesServlet extends HttpServlet {
             out.println("<tr bgcolor='#32CD32'>");
             out.println("<td style= 'text-align: center' ><strong>ID</strong></td>");
             out.println("<td style= 'text-align: center' ><strong>Nome</strong></td>");
+            out.println("<td style= 'text-align: center' ><strong>Usuario</strong></td>");
             out.println("<td style= 'text-align: center' ><strong>Sexo</strong></td>");
             out.println("<td style= 'text-align: center' ><strong>E-mail</strong></td>");
             out.println("<td style= 'text-align: center' ><strong>Data de Nascimento</strong></td>");
@@ -82,6 +83,7 @@ public class ListarClientesServlet extends HttpServlet {
             out.println("<td style= 'text-align: center' ><strong>Editar</strong></td>");
             out.println("<td style= 'text-align: center' ><strong>Apagar</strong></td>");
             out.println("</tr>");
+            
             while (rs.next()) {
 
                 String dNascimento = sdf.format(rs.getDate("dtNascimento"));
@@ -91,6 +93,7 @@ public class ListarClientesServlet extends HttpServlet {
                 out.println("<tr>");
                 out.println("<td>" + rs.getInt("idPessoa") + "</td>");
                 out.println("<td>" + rs.getString("nome") + "</td>");
+                out.println("<td>" + rs.getString("usuario") + "</td>");
                 out.println("<td>" + rs.getString("sexo") + "</td>");
                 out.println("<td>" + rs.getString("email") + "</td>");
                 out.println("<td style= 'text-align: center' >" + dNascimento + "</td>");

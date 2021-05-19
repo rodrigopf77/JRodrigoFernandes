@@ -120,7 +120,7 @@ public class PessoaDAO {
         Statement consulta = null;
         ResultSet resultado = null;
 
-        List<Pessoa> pessoas = new ArrayList<Pessoa>();
+        List<Pessoa> pessoas = new ArrayList<>();
 
         Pessoa pessoa = null;
 //        Pessoa p = new Pessoa();

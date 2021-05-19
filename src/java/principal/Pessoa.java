@@ -35,8 +35,9 @@ public class Pessoa {
     public Pessoa() {
     }
 
-    public Pessoa(String nome, String senha, String sexo, String email, String data, String naturalidade, String nacionalidade, String cpf) throws ClassNotFoundException, SQLException {
+    public Pessoa(String nome, String usuario, String senha, String sexo, String email, String data, String naturalidade, String nacionalidade, String cpf) throws ClassNotFoundException, SQLException {
         this.nome = nome;
+        this.usuario = usuario;
         this.senha = Criptografia.criptografar(senha);
         this.sexo = sexo;
         this.email = email;

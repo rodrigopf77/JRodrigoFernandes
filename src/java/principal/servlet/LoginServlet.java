@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import principal.seguranca.Criptografia;
 import principal.DAO.LoginDAO;
+import principal.Pessoa;
 import principal.Usuario;
 
 /**
@@ -79,7 +80,7 @@ public class LoginServlet extends HttpServlet {
 
         Usuario usuario = new Usuario();
         usuario.setUsuario(request.getParameter("txtUsuario"));
-        usuario.setSenha(Criptografia.criptografar(request.getParameter("txtSenha")));
+        usuario.setSenha(request.getParameter("txtSenha"));
 
         if (usuario.getUsuario().trim().length() < 4) {
 

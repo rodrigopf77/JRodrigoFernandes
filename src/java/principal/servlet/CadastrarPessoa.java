@@ -36,7 +36,8 @@ public class CadastrarPessoa extends HttpServlet {
             out.println("<h1>Cadastrar Pessoa</h1>");
             out.println("<hr/>");
             out.println("<form method='POST'>");
-            out.println("Nome:<br> <input type='text' name='txtNome'>");
+            out.println("Nome:<br> <input type='text' name='txtNome'><br><br>");
+            out.println("Usuario:<br> <input type='text' name='txtUsuario'>");
             out.println("<br><br>Senha:<br> <input type='password' name='txtSenha'>");
             out.println("<br><br>Sexo:<br>  <input type='text' name='txtSexo'>");
             out.println("<br><br>E-mail:<br> <input type='email' name='txtEmail'>");
@@ -66,6 +67,7 @@ public class CadastrarPessoa extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         String nome = request.getParameter("txtNome");
+        String usuario = request.getParameter("txtUsuario");
         String senha = request.getParameter("txtSenha");
         String sexo = request.getParameter("txtSexo");
         String email = request.getParameter("txtEmail");
@@ -89,7 +91,7 @@ public class CadastrarPessoa extends HttpServlet {
         } else {
             try {
 
-                Pessoa p = new Pessoa(nome, senha, sexo, email, dataNascimento, naturalidade, nacionalidade, cpf);
+                Pessoa p = new Pessoa(nome, usuario, senha, sexo, email, dataNascimento, naturalidade, nacionalidade, cpf);
                 System.out.println("Registro inserido com sucesso!");
                 response.sendRedirect("http://localhost:8080/JavaRodrigoFernandes/ListarClientes");
                 out.println("Registro inserido com sucesso!");
